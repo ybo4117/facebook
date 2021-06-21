@@ -22,6 +22,7 @@ public class UserController {
 
     @GetMapping("/join")
     //@ModelAttribute 빼도된다
+    //그래서 postampping에는 안쓴거임
     public void join(@ModelAttribute UserEntity userEntity){}
 
     @PostMapping("/join")
