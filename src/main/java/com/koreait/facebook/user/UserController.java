@@ -5,10 +5,7 @@ import com.koreait.facebook.user.model.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 
 @Controller
@@ -18,17 +15,24 @@ public class UserController {
     private UserService service;
 
     @GetMapping("/login")
-    public void login(){}
+    public void login(@ModelAttribute UserEntity userEntity){}
 
     @GetMapping("/join")
     //@ModelAttribute 빼도된다
-    //그래서 postampping에는 안쓴거임
+    //그래서 postmpping에는 안쓴거임
     public void join(@ModelAttribute UserEntity userEntity){}
 
     @PostMapping("/join")
     public String joinProc(UserEntity userEntity){
         service.join(userEntity);
-        return "redirect:/feed/home";
+        return "redirect:login?needEmail=1";
     }
+
+    @GetMapping("/auth")
+    public String auth(UserEntity param){
+        int result = service.auth(param);
+        return "redirect:login?auth=" + result;
+    }
+
 
 }
