@@ -12,6 +12,7 @@
         <div th:if="${param.needEmail != null and param.needEmail[0] == '1'}">이메일 인증을 해주세요.</div>
         <div th:if="${param.auth != null and param.auth[0] == '1'}">인증되었습니다.</div>
         <div th:if="${param.auth != null and param.auth[0] == '0'}">인증에 실패하였습니당.</div>
+        <div th:if="${param.error}">로그인에 실패하였습니다!</div>
         <!--/*
         <div th:if = "${#request.getParameter('auth') == '1'}" th:text="authauth"></div>
         */-->

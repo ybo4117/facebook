@@ -2,11 +2,14 @@ package com.koreait.facebook.user;
 
 
 import com.koreait.facebook.common.EmailServiceImpl;
+import com.koreait.facebook.common.MyFileUtils;
 import com.koreait.facebook.common.MySecurityUtils;
+import com.koreait.facebook.security.IAuthenticationFacade;
 import com.koreait.facebook.user.model.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class UserService {
@@ -18,13 +21,22 @@ public class UserService {
     private MySecurityUtils securityUtils;
 
     @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private IAuthenticationFacade auth;
+
+    @Autowired
+    private MyFileUtils myFileUtils;
+
+    @Autowired
     private UserMapper mapper;
 
     public int join(UserEntity param){
         String authCd = securityUtils.getRandomStringValue(5);
 
         //비밀번호 암호화
-        String hashedPw = BCrypt.hashpw(param.getPw(), BCrypt.gensalt());
+        String hashedPw = passwordEncoder.encode(param.getPw());
         param.setPw(hashedPw);
         param.setAuthCd(authCd);
         int result = mapper.join(param);
@@ -40,6 +52,15 @@ public class UserService {
 
     public int auth(UserEntity param){
         return mapper.auth(param);
+    }
+    public void profileImg(MultipartFile[] imgArr){
+        int iuser = auth.getLoginUserPk();
+        System.out.println("iuser : " + iuser);
+        String target = "/profile/" + iuser;
+
+        for(MultipartFile img : imgArr){
+            String saveFileNm = myFileUtils.transferTo(img, target);
+        }
     }
 
 

@@ -11,6 +11,12 @@
         (#{email}, #{pw}, #{nm}, #{tel}, #{authCd})
     </insert>
 
+    <select id="selUser" resultType="UserEntity">
+        SELECT * FROM t_user
+        WHERE email= #{email}
+        AND authCd IS NULL
+    </select>
+
     <update id="auth">
         UPDATE t_user SET
         authCd = null
