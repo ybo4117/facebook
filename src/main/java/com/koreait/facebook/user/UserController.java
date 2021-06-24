@@ -2,6 +2,7 @@ package com.koreait.facebook.user;
 
 
 import com.koreait.facebook.user.model.UserEntity;
+import com.koreait.facebook.user.model.UserProfileEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
