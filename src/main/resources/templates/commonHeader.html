@@ -12,7 +12,6 @@
                     <style>.cls-1 {
                         fill: #f1f2f2;
                     }
-
                     .cls-2 {
                         fill: #49aaee;
                     }</style>
@@ -35,9 +34,7 @@
                 <li>
             <a th:href="@{/user/profile}">
                 <span class="span__profile" th:with="auth=${#authentication.getPrincipal().getUser()}">
-                   <th:block th:if="${auth.mainProfile != null}">
-                     <img th:src="@{/pic/profile/{iuser}/{img}(iuser=${auth.iuser}, img=${auth.mainProfile})}">
-                   </th:block>
+                   <img class="profile w50" th:if="${auth.mainProfile != null}" th:src="@{/pic/profile/{iuser}/{img}(iuser=${auth.iuser}, img=${auth.mainProfile})}">
                   <span th:text="${auth.nm}"></span>
                 </span>
             </a>

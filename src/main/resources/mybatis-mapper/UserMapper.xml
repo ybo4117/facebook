@@ -40,8 +40,15 @@
             </if>
         </set>
         WHERE iuser= #{iuser}
+    </update>
 
-
+    <update id="updUserMainProfile">
+        UPDATE t_user
+        INNER JOIN t_user_profile
+        ON A.iuser = B.iuser
+        AND B.iprofile = ${iprofile}
+        SET A.mainprofile = B.img
+        WHERE A.iuser = #{iuser}
     </update>
 
 </mapper>
