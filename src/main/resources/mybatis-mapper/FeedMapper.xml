@@ -4,5 +4,18 @@
 
 <mapper namespace="com.koreait.facebook.user.FeedMapper">
 
+    <insert id="insFeed">
+        INSERT INTO t_feed
+        ( location, ctnt, iuser)
+        VALUES
+        ( #{location}, #{ctnt}, #{iuser})
+    </insert>
+
+    <insert id="insFeedImg">
+        INSERT INTO t_feed_img
+        (ifeed, img)
+        VALUES
+        (#{ifeed}, #{img})
+    </insert>
 
 </mapper>
