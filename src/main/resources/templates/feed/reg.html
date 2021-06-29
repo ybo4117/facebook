@@ -4,15 +4,17 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="basicLayout">
 <head><title>피드 등록</title></head>
-
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/feed/reg.css}">
+</th:block>
  <th:block layout:fragment="js">
      <script defer th:src="@{/js/feed/reg.js}"></script>
  </th:block>
 
-  <th:block layout:fragment="content">
+  <th:block layout:fragment="content" th:object="${feedEntity}">
       <h1>Reg</h1>
-
-      <div><textarea id="ctnt" placeholder="지금 뭔생각 하심?"></textarea></div>
+      <div><textarea th:field="*{ctnt}" placeholder="지금 뭔생각 하심?"></textarea></div>
+      <div><input type="text" th:field="*{location}" placeholder="지역"></div>
       <div><input type="file" id="selectImgArr" multiple accept="image/*"></div>
       <div><input type="button" id="btnUpload" value="등록" disabled></div>
       <div id="displayImgList"></div>
