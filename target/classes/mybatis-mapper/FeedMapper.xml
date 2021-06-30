@@ -29,4 +29,28 @@
         ORDER BY A.ifeed DESC
     </select>
 
+    <resultMap id="FeedDomainMap" type="FeedDomain2">
+        <result property="ifeed" column="ifeed"></result>
+        <collection property="imgList" column="ifeed" select="selFeedImgList"></collection>
+    </resultMap>
+
+    <select id="selFeedList2" resultMap="FeedDomainMap">
+        SELECT A.ifeed, A.location, A.ctnt, A.iuser, A.regdt
+             , C.nm AS writer, C.mainProfile
+        FROM t_feed A
+        INNER JOIN t_user C
+        ON A.iuser = C.iuser
+        <if test="iuser > 0">
+            AND C.iuser = ${iuser}
+        </if>
+        ORDER BY A.ifeed DESC
+        LIMIT #{startIdx}, #{limit}
+    </select>
+
+    <select id="selFeedImgList" resultType="FeedImgEntity">
+        SELECT ifeedimg, ifeed, img
+        FROM t_feed_img
+        WHERE ifeed = #{ifeed}
+    </select>
+
 </mapper>

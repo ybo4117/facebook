@@ -14,8 +14,10 @@ function getFeedList(){
 function makeFeedList(data) {
     if(data.length == 0) { return; }
     let beforeifeed = 0;
-    let imgDiv = null;
-    data.forEach(item => {
+    let swiperWrapperDiv = null;
+
+    for(let i=0; i<data.length; i++) {
+        const item = data[i];
         if(beforeifeed !== item.ifeed) {
             beforeifeed = item.ifeed;
 
@@ -33,20 +35,42 @@ function makeFeedList(data) {
                 <div>${item.location == null ? '' : item.location}</div>
             </div>
             `;
-            imgDiv = document.createElement('div');
+            const imgDiv = document.createElement('div');
+            imgDiv.classList.add("itemImg");
+            const swiperContainerDiv = document.createElement('div');
+            swiperContainerDiv.classList.add('swiper-container');
+
+            swiperWrapperDiv = document.createElement('div');
+            swiperWrapperDiv.classList.add('swiper-wrapper');
+
+            swiperContainerDiv.append(swiperWrapperDiv);
+            imgDiv.append(swiperContainerDiv);
+
             itemContainer.append(topDiv);
             itemContainer.append(imgDiv);
+            if(item.ctnt != null){
+                const ctntDiv = document.createElement('div');
+                ctntDiv.innerText = item.ctnt;
+                ctntDiv.classList.add('itemCtnt');
+                itemContainer.append(ctntDiv);
+            }
             feedContainerElem.append(itemContainer);
         }
 
-        if(item.img != null){
+        if(item.img != null) {
+            const swiperSlideDiv = document.createElement('div');
+            swiperSlideDiv.classList.add('swiper-slide');
+
             const img = document.createElement('img');
             img.src = `/pic/feed/${item.ifeed}/${item.img}`;
-            imgDiv.classList.add('divImg');
-            imgDiv.append(img);
-        }
 
+            swiperSlideDiv.append(img);
+            swiperWrapperDiv.append(swiperSlideDiv);
+            }
+        }
+        const swiper = new Swiper('.swiper-container', {
+            direction: 'horizontal',
+            loop: false,
     });
 }
-
 getFeedList();
