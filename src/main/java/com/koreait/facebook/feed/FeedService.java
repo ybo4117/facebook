@@ -50,8 +50,20 @@ public class FeedService {
     public List<FeedDomain> selFeedList() {
         return mapper.selFeedList();
     }
-
     public List<FeedDomain2> selFeedList2(FeedDTO param) {
+        param.setIuserForFav(auth.getLoginUserPk());
         return mapper.selFeedList2(param);
     }
+
+    //fav
+    public int feedFavProc(FeedFavEntity param, int type){
+        param.setIuser(auth.getLoginUserPk());
+        if(type == 1){
+            return mapper.insFeedFav(param);
+        }
+        return mapper.delFeedFav(param);
+
+    }
+
+
 }

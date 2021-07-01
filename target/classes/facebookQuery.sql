@@ -34,3 +34,12 @@ CREATE TABLE t_feed_img(
                            img VARCHAR(50) NOT NULL,
                            FOREIGN KEY (ifeed) REFERENCES t_feed(ifeed)
 );
+
+CREATE TABLE t_feed_fav(
+                           ifeed INT UNSIGNED,
+                           iuser	INT UNSIGNED,
+                           regdt DATETIME DEFAULT NOW(),
+                           PRIMARY KEY(ifeed, iuser),
+                           FOREIGN KEY(ifeed) REFERENCES t_feed(ifeed),
+                           FOREIGN KEY(iuser) REFERENCES t_user(iuser)
+);

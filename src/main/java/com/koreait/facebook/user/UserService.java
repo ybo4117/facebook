@@ -10,7 +10,6 @@ import com.koreait.facebook.feed.model.FeedDomain2;
 import com.koreait.facebook.security.IAuthenticationFacade;
 import com.koreait.facebook.user.model.UserEntity;
 import com.koreait.facebook.user.model.UserProfileEntity;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -103,7 +102,7 @@ public class UserService {
     }
 
     public List<FeedDomain2> selFeedList2(FeedDTO param) {
-        param.setIuser(auth.getLoginUserPk());
+        param.setIuserForMyFeed(auth.getLoginUserPk());
         return feedMapper.selFeedList2(param);
     }
 

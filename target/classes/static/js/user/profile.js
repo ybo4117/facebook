@@ -73,4 +73,8 @@ profileImgElem.addEventListener('click', () => {
 //모달창 닫기
 modalCloseElem.addEventListener('click', () => {
     modalElem.classList.add('hide');
-})
+});
+
+feedObj.url = '/user/feedList';
+feedObj.setScrollInfinity(window);
+feedObj.getFeedList(1);
