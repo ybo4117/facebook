@@ -72,6 +72,7 @@ public class FeedService {
     }
 
     public List<FeedCmtDomain> selFeedCmtList(FeedCmtEntity param){
+
         return mapper.selFeedCmtList(param);
     }
 

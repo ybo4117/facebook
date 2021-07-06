@@ -134,24 +134,42 @@ const feedObj = {
             const cmtListDiv = document.createElement('div');
             const cmtFormDiv = document.createElement('div')
             cmtDiv.append(cmtListDiv);
-            if(item.cmt != null && item.cmt.isMore === 1 ){
-                const moreCmtDiv = document.createElement('div');
+            if (item.cmt != null && item.cmt.isMore === 1) {
+                const changeCmtDiv = document.createElement('div');
                 const moreCmtSpan = document.createElement('span');
+                const lessCmtSpan = document.createElement('span');
                 moreCmtSpan.className = 'pointer';
                 moreCmtSpan.innerText = '댓글 더보기';
-                moreCmtSpan.addEventListener('click', () =>{
-                    moreCmtSpan.remove();
-                   fetch(`cmt?ifeed=${item.ifeed}`)
-                       .then(res => res.json())
-                       .then(myJson => {
-                           myJson.forEach(cmtItem =>{
-                               const cmtItemContainerDiv = this.makeCmtItem(cmtItem);
-                               cmtListDiv.append(cmtItemContainerDiv);
-                           })
-                       });
+
+                lessCmtSpan.className = 'pointer';
+                lessCmtSpan.innerText = '댓글 접기';
+                lessCmtSpan.classList.add('hide');
+                var result = 1;
+
+                moreCmtSpan.addEventListener('click', () => {
+                    moreCmtSpan.classList.add('hide');
+                    lessCmtSpan.classList.remove('hide');
+                    fetch(`cmt?ifeed=${item.ifeed}`)
+                        .then(res => res.json())
+                        .then(myJson => {
+                            myJson.forEach(cmtItem => {
+                                const cmtItemContainerDiv = this.makeCmtItem(cmtItem);
+                                cmtListDiv.append(cmtItemContainerDiv);
+                            })
+                        });
                 });
-                moreCmtDiv.append(moreCmtSpan);
-                cmtDiv.append(moreCmtDiv);
+                lessCmtSpan.addEventListener('click', () => {
+                    lessCmtSpan.classList.add('hide');
+                    moreCmtSpan.classList.remove('hide');
+                    cmtListDiv.innerHTML = '';
+                    const cmtItemContainerDiv = this.makeCmtItem(item.cmt);
+                    cmtListDiv.append(cmtItemContainerDiv);
+                });
+
+                changeCmtDiv.append(moreCmtSpan);
+                changeCmtDiv.append(lessCmtSpan);
+                cmtDiv.append(changeCmtDiv);
+
             }
             cmtDiv.append(cmtFormDiv);
 
@@ -195,14 +213,16 @@ const feedObj = {
                                 alert('댓글을 등록할 수 없습니다.');
                                 break;
                             case 1:
-                                alert('댓글 달기 성공 !');
                                 cmtInput.value = '';
+                                this.makeCmtItem(myJson);
+
                                 break;
                         }
                     })
                     .catch(err => {
                         console.log("err : " + err);
                     });
+
             });
 
 
@@ -249,7 +269,7 @@ const feedObj = {
             this.hideLoading();
         });
     },
-    makeCmtItem: function({iuser, writerProfile, writer, cmt}) {
+    makeCmtItem: function ({iuser, writerProfile, writer, cmt, regdt}) {
         const cmtItemContainerDiv = document.createElement('div');
         cmtItemContainerDiv.className = 'cmtItemCont';
 
@@ -266,12 +286,16 @@ const feedObj = {
         //댓글
         const cmtItemCtntDiv = document.createElement('div');
         cmtItemCtntDiv.className = 'cmtItemCtnt';
-        cmtItemCtntDiv.innerHTML = `<div>${writer}</div><div>${cmt}</div>`;
+        cmtItemCtntDiv.innerHTML = `<div>${writer}</div><div>${cmt}</div><div>${regdt}</div>`;
         cmtItemContainerDiv.append(cmtItemCtntDiv);
 
         return cmtItemContainerDiv;
     },
-    hideLoading: function () { this.loadingElem.classList.add('hide'); },
-    showLoading: function () { this.loadingElem.classList.remove('hide'); }
+    hideLoading: function () {
+        this.loadingElem.classList.add('hide');
+    },
+    showLoading: function () {
+        this.loadingElem.classList.remove('hide');
+    }
 }
 
