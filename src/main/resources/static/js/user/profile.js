@@ -75,6 +75,9 @@ modalCloseElem.addEventListener('click', () => {
     modalElem.classList.add('hide');
 });
 
+const localConstElem = document.querySelector('#localConst');
+
 feedObj.url = '/user/feedList';
 feedObj.setScrollInfinity(window);
+feedObj.iuser = localConstElem.dataset.iuser;
 feedObj.getFeedList(1);

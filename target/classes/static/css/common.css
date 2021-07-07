@@ -30,7 +30,7 @@ nav {
 .header__right .menus li { flex-grow: 1; }
 
 #container { margin-top: 80px; padding: 30px; }
-.pointer{ cursor:pointer; }
+.pointer{ cursor: pointer; }
 .hide { display: none !important; }
 .modal { z-index: 100; position: fixed; top: 0; left: 0; height: 100%; width: 100%; background-color: rgba(0, 0, 0, 0.87);}
 .modal_close_parent { display: flex; justify-content: flex-end; padding: 40px 60px; }
@@ -63,5 +63,6 @@ section #feedContainer { width: 620px; }
 #feedContainer .item .itemCtnt { margin-top: 30px; margin-bottom: 20px; padding: 10px; }
 #feedContainer .item .cmtItemCont { display: flex; margin-bottom: 10px; }
 #feedContainer .item .cmtItemCont .cmtItemProfile { width: 40px; }
-#feedContainer .item .cmtItemCont .cmtItemCtnt {  background-color: silver; border-radius: 5px; flex-grow: 1; margin-left: 5px; padding: 5px; }
-
+#feedContainer .item .cmtItemCont .cmtItemCtnt {  background-color: silver; border-radius: 5px; flex-grow: 1; margin-left: 5px; padding: 5px;}
+#feedContainer .item .cmtItemCont .cmtItemCtnt .mainflex{display: flex;}
+#feedContainer .item .cmtItemCont .cmtItemCtnt .regdtflex {flex-grow: 1; text-align: end;}

@@ -53,3 +53,12 @@ CREATE TABLE t_feed_cmt(
                            FOREIGN KEY (ifeed) REFERENCES t_feed(ifeed),
                            FOREIGN KEY (iuser) REFERENCES t_user(iuser),
 );
+
+CREATE TABLE t_user_follow (
+                               iuserMe INT UNSIGNED,
+                               iuserYou INT UNSIGNED,
+                               regdt DATETIME DEFAULT NOW(),
+                               PRIMARY KEY(iuserMe, iuserYou),
+                               FOREIGN KEY (iuserMe) REFERENCES t_user(iuser),
+                               FOREIGN KEY (iuserYou) REFERENCES t_user(iuser)
+);

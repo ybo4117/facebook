@@ -24,9 +24,11 @@ const feedObj = {
     itemLength: 0,
     currentPage: 1,
     url: '',
+    iuser: 0,
     swiper: null,
     containerElem: document.querySelector('#feedContainer'),
     loadingElem: document.querySelector('.loading'),
+
     makeFeedList: function (data) {
         if (data.length == 0) {
             return;
@@ -144,7 +146,6 @@ const feedObj = {
                 lessCmtSpan.className = 'pointer';
                 lessCmtSpan.innerText = '댓글 접기';
                 lessCmtSpan.classList.add('hide');
-                var result = 1;
 
                 moreCmtSpan.addEventListener('click', () => {
                     moreCmtSpan.classList.add('hide');
@@ -176,6 +177,11 @@ const feedObj = {
             const cmtInput = document.createElement('input');
             cmtInput.type = 'text';
             cmtInput.placeholder = '댓글 입력하셈';
+            cmtInput.addEventListener('keyup', (e)=>{
+               if(e.key === 'Enter'){
+                   cmtBtn.click();
+               }
+            });
 
             if (item.cmt != null) { // 댓글이 있음
                 const cmtItemContainerDiv = this.makeCmtItem(item.cmt);
@@ -185,6 +191,7 @@ const feedObj = {
             const cmtBtn = document.createElement('input');
             cmtBtn.type = 'button';
             cmtBtn.value = '등록';
+
             cmtBtn.addEventListener('click', () => {
                 const cmt = cmtInput.value;
                 if (cmt.length === 0) {
@@ -213,16 +220,21 @@ const feedObj = {
                                 alert('댓글을 등록할 수 없습니다.');
                                 break;
                             case 1:
-                                cmtInput.value = '';
-                                this.makeCmtItem(myJson);
+                                alert('댓글을 등록 성공');
+                                const globalConstElem = document.querySelector('#globalConst'); // 헤더에 필요한 값을 담아주기위해 HTML에서 받아옴
+                                const param = {...globalConstElem.dataset}; //객체만들기
+                                param.cmt = cmtInput.value; // 버튼에 등록된 cmt값을 넣어줌
 
+                                const cmtItemDiv = this.makeCmtItem(param)
+                                cmtListDiv.append(cmtItemDiv);
+
+                                cmtInput.value = '';
                                 break;
                         }
                     })
                     .catch(err => {
                         console.log("err : " + err);
                     });
-
             });
 
 
@@ -257,7 +269,7 @@ const feedObj = {
     getFeedList: function (page) {
         this.showLoading();
 
-        fetch(`${this.url}?page=${page}&limit=${this.limit}`)
+        fetch(`${this.url}?iuserForMyFeed=${this.iuser}&page=${page}&limit=${this.limit}`)
             .then(res => res.json())
             .then(myJson => {
                 console.log(myJson);
@@ -286,7 +298,7 @@ const feedObj = {
         //댓글
         const cmtItemCtntDiv = document.createElement('div');
         cmtItemCtntDiv.className = 'cmtItemCtnt';
-        cmtItemCtntDiv.innerHTML = `<div>${writer}</div><div>${cmt}</div><div>${regdt}</div>`;
+        cmtItemCtntDiv.innerHTML = `<div>${writer}</div> <div class="mainflex"><div>${cmt}</div><div class="regdtflex">${regdt}</div></div>`;
         cmtItemContainerDiv.append(cmtItemCtntDiv);
 
         return cmtItemContainerDiv;
@@ -296,6 +308,6 @@ const feedObj = {
     },
     showLoading: function () {
         this.loadingElem.classList.remove('hide');
-    }
+    },
 }
 

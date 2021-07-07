@@ -63,5 +63,6 @@ section #feedContainer { width: 620px; }
 #feedContainer .item .itemCtnt { margin-top: 30px; margin-bottom: 20px; padding: 10px; }
 #feedContainer .item .cmtItemCont { display: flex; margin-bottom: 10px; }
 #feedContainer .item .cmtItemCont .cmtItemProfile { width: 40px; }
-#feedContainer .item .cmtItemCont .cmtItemCtnt {  background-color: silver; border-radius: 5px; flex-grow: 1; margin-left: 5px; padding: 5px; }
-
+#feedContainer .item .cmtItemCont .cmtItemCtnt {  background-color: silver; border-radius: 5px; flex-grow: 1; margin-left: 5px; padding: 5px;}
+#feedContainer .item .cmtItemCont .cmtItemCtnt .mainflex{display: flex;}
+#feedContainer .item .cmtItemCont .cmtItemCtnt .regdtflex {flex-grow: 1; text-align: end;}

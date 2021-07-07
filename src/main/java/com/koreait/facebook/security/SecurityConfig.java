@@ -26,7 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception{ // "favicon.ico" << 이녀석에 / 없애니까 에러안뜸
+    public void configure(WebSecurity web) throws Exception{
         web.ignoring().antMatchers("/pic/**","/css/**", "/js/**", "/img/**",  "/error", "favicon.ico");
     }
 
@@ -55,3 +55,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 }
+
