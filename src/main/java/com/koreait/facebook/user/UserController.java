@@ -5,6 +5,7 @@ import com.koreait.facebook.common.MyConst;
 import com.koreait.facebook.feed.model.FeedDTO;
 import com.koreait.facebook.feed.model.FeedDomain2;
 import com.koreait.facebook.security.UserDetailsImpl;
+import com.koreait.facebook.user.model.UserDTO;
 import com.koreait.facebook.user.model.UserEntity;
 import com.koreait.facebook.user.model.UserProfileEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,12 +53,18 @@ public class UserController {
     @GetMapping("/profile")
     public void profile(Model model, UserEntity param,@AuthenticationPrincipal UserDetailsImpl userDetails) {
         System.out.println(param);
-        if(param.getIuser() == 0){
-            param.setIuser(userDetails.getUser().getIuser());
+//        if(param.getIuser() == 0){
+//            param.setIuser(userDetails.getUser().getIuser());
+//        }
+
+        UserDTO param2 = new UserDTO();
+        param2.setYouIuser(param.getIuser());
+        if(param2.getYouIuser() == 0) {
+            param2.setYouIuser(userDetails.getUser().getIuser());
         }
 
         //UserEntity loginUser = userDetails.getUser();
-        model.addAttribute(myConst.PROFILE, service.selUserProfile(param));
+        model.addAttribute(myConst.PROFILE, service.selUserProfile(param2));
         model.addAttribute(myConst.PROFILE_LIST, service.selUserProfileList(param));
     }
 

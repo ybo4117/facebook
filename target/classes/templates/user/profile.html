@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="basicLayout">
+<head><title>프로필</title></head>
 
 <th:block layout:fragment="css">
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
@@ -23,25 +24,48 @@
         </div>
     </form>
 
-    <div id="flexContainer" th:if="${profile.mainProfile != null}">
+    <div id="flexContainer">
         <div>
-            <img class="profile w300 pointer"
+            <table>
+                <tr>
+                    <td>게시물</td>
+                    <td th:text="${profile.cntFeed}"></td>
+                    <td>팔로워</td>
+                    <td th:text="${profile.cntFollower}"></td>
+                    <td>팔로우</td>
+                    <td th:text="${profile.cntFollow}"></td>
+                    <td th:unless="${auth.iuser eq profile.iuser}">
+                        <th:block th:if="${profile.isMeFollowYou eq 1}">
+                            <input type="button" value="팔로우 취소">
+                        </th:block>
+                        <th:block th:unless="${profile.isMeFollowYou eq 1}">
+                            <th:block th:if="${profile.isYouFollowMe eq 1}">
+                                <input type="button" value="맞팔로우">
+                            </th:block>
+                            <th:block th:unless="${profile.isYouFollowMe eq 1}">
+                                <input type="button" value="팔로우">
+                            </th:block>
+                        </th:block>
+                    </td>
+                </tr>
+            </table>
+            <img class="profile w300 pointer" th:if="${profile.mainProfile != null}"
                  th:src="@{/pic/profile/{iuser}/{img}(iuser=${profile.iuser}, img=${profile.mainProfile})}">
             <table>
                 <tr>
-                    <th>Email</th>
+                    <th>email</th>
                     <td th:text="${profile.email}"></td>
                 </tr>
                 <tr>
-                    <th>Name</th>
+                    <th>name</th>
                     <td th:text="${profile.nm}"></td>
                 </tr>
                 <tr>
-                    <th>Tel</th>
+                    <th>tel</th>
                     <td th:text="${profile.tel}"></td>
                 </tr>
                 <tr>
-                    <th>Reg Date</th>
+                    <th>reg date</th>
                     <td th:text="${profile.regdt}"></td>
                 </tr>
             </table>
@@ -67,45 +91,47 @@
                             <img th:src="@{/pic/profile/{iuser}/{img}(iuser=${profile.iuser}, img=${item.img})}">
                         </div>
                     </div>
+
                 </div>
                 <!-- If we need pagination -->
                 <div class="swiper-pagination"></div>
+
                 <!-- If we need navigation buttons -->
                 <div class="swiper-button-prev"></div>
                 <div class="swiper-button-next"></div>
+
                 <!-- If we need scrollbar -->
                 <div class="swiper-scrollbar"></div>
             </div>
         </div>
     </div>
 
-        <script type="module">
-            const swiper = new Swiper('.modal .swiper-container', {
-                // Optional parameters
-                direction: 'horizontal',
-                loop: false,
+    <script type="module">
+        const swiper = new Swiper('.modal .swiper-container', {
+            // Optional parameters
+            direction: 'horizontal',
+            loop: false,
 
-                // If we need pagination
-                pagination: {
-                    el: '.swiper-pagination',
-                },
+            // If we need pagination
+            pagination: {
+                el: '.swiper-pagination',
+            },
 
-                // Navigation arrows
-                navigation: {
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
-                },
+            // Navigation arrows
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
 
-                // And if we need scrollbar
-                scrollbar: {
-                    el: '.swiper-scrollbar',
-                },
-                effect: 'fade',
-                fadeEffect: {
-                    crossFade: true
-                },
-            });
-        </script>
-
+            // And if we need scrollbar
+            scrollbar: {
+                el: '.swiper-scrollbar',
+            },
+            effect: 'fade',
+            fadeEffect: {
+                crossFade: true
+            },
+        });
+    </script>
 </th:block>
 </html>

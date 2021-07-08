@@ -19,6 +19,11 @@ function getDataTimeInfo(dt) {
     return targetDt.toLocaleString();
 }
 
+//프로필 화면으로 이동
+function moveToProfile(iuser) {
+    location.href = `/user/profile?iuser=${iuser}`;
+}
+
 const feedObj = {
     limit: 5,
     itemLength: 0,
@@ -46,10 +51,11 @@ const feedObj = {
             topDiv.classList.add('top')
             topDiv.innerHTML = `
             <div class="itemProfileCont">
-                <img src="/pic/profile/${item.iuser}/${item.mainProfile}">
+                <img src="/pic/profile/${item.iuser}/${item.mainProfile}" class="pointer" 
+                onclick="moveToProfile(${item.iuser});" onerror="this.style.display='none';">
             </div>
             <div>
-                <div>${item.writer} - ${regDtInfo}</div>
+                <div><span class="pointer" onclick="moveToProfile(${item.iuser});">${item.writer}</span> - ${regDtInfo}</div>
                 <div>${item.location == null ? '' : item.location}</div>
             </div>            
         `;
@@ -285,12 +291,16 @@ const feedObj = {
         const cmtItemContainerDiv = document.createElement('div');
         cmtItemContainerDiv.className = 'cmtItemCont';
 
+
         //프로필
         const cmtItemProfileDiv = document.createElement('div');
         cmtItemProfileDiv.className = 'cmtItemProfile';
         const cmtItemWriterProfileImg = document.createElement('img');
         cmtItemWriterProfileImg.src = `/pic/profile/${iuser}/${writerProfile}`;
-        cmtItemWriterProfileImg.className = 'profile w30';
+        cmtItemWriterProfileImg.className = 'profile w30 pointer';
+        cmtItemWriterProfileImg.addEventListener('click', () => {
+            moveToProfile(iuser);
+        });
 
         cmtItemProfileDiv.append(cmtItemWriterProfileImg);
         cmtItemContainerDiv.append(cmtItemProfileDiv);
@@ -298,7 +308,7 @@ const feedObj = {
         //댓글
         const cmtItemCtntDiv = document.createElement('div');
         cmtItemCtntDiv.className = 'cmtItemCtnt';
-        cmtItemCtntDiv.innerHTML = `<div>${writer}</div> <div class="mainflex"><div>${cmt}</div><div class="regdtflex">${regdt}</div></div>`;
+        cmtItemCtntDiv.innerHTML = `<div class="pointer" onclick="moveToProfile(${iuser});">${writer}</div> <div class="mainflex"><div>${cmt}</div><div class="regdtflex">${regdt}</div></div>`;
         cmtItemContainerDiv.append(cmtItemCtntDiv);
 
         return cmtItemContainerDiv;

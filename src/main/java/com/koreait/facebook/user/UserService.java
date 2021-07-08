@@ -8,6 +8,7 @@ import com.koreait.facebook.feed.FeedMapper;
 import com.koreait.facebook.feed.model.FeedDTO;
 import com.koreait.facebook.feed.model.FeedDomain2;
 import com.koreait.facebook.security.IAuthenticationFacade;
+import com.koreait.facebook.user.model.UserDTO;
 import com.koreait.facebook.user.model.UserEntity;
 import com.koreait.facebook.user.model.UserDomain;
 import com.koreait.facebook.user.model.UserProfileEntity;
@@ -82,7 +83,8 @@ public class UserService {
         }
     }
 
-    public UserDomain selUserProfile(UserEntity param){
+    public UserDomain selUserProfile(UserDTO param) {
+        param.setMeIuser(auth.getLoginUserPk());
         return profileMapper.selUserProfile(param);
     }
 

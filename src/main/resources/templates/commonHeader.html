@@ -5,7 +5,7 @@
 
 <header th:fragment="header">
     <span id="globalConst" sec:authorize="isAuthenticated()" th:with="auth=${#authentication.getPrincipal().getUser()}"
-          th:attr="data-iuser=${auth.iuser}, data-writer=${auth.nm}, data-writer-profile=${auth.mainProfile}, data-regdt=${auth.regdt}"></span>
+          th:attr="data-iuser=${auth.iuser}, data-writer=${auth.nm}, data-writer-profile=${auth.mainProfile}, data-regdt=${regdt}"></span>
     <nav>
         <div class="header__left">
             <a th:href="@{/feed/home}">
