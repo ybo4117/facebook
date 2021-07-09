@@ -7,6 +7,7 @@ import com.koreait.facebook.feed.model.FeedDomain2;
 import com.koreait.facebook.security.UserDetailsImpl;
 import com.koreait.facebook.user.model.UserDTO;
 import com.koreait.facebook.user.model.UserEntity;
+import com.koreait.facebook.user.model.UserFollowEntity;
 import com.koreait.facebook.user.model.UserProfileEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -61,6 +62,7 @@ public class UserController {
         param2.setYouIuser(param.getIuser());
         if(param2.getYouIuser() == 0) {
             param2.setYouIuser(userDetails.getUser().getIuser());
+            param.setIuser(userDetails.getUser().getIuser());
         }
 
         //UserEntity loginUser = userDetails.getUser();
@@ -86,4 +88,15 @@ public class UserController {
         return service.selFeedList2(param);
     }
 
+    @ResponseBody
+    @PostMapping("/follow")
+    public Map<String, Object> doFollow(@RequestBody UserFollowEntity param) {
+        return service.insUserFollow(param);
+    }
+
+    @ResponseBody
+    @DeleteMapping("/follow")
+    public Map<String, Object> cancelFollow(UserFollowEntity param) {
+        return service.delUserFollow(param);
+    }
 }

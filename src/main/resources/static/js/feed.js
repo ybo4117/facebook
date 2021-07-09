@@ -46,14 +46,17 @@ const feedObj = {
             itemContainer.classList.add('item');
 
             // 글쓴이 정보 영역
+            let imgTag = ``;
+            if(item.mainProfile != null) {
+                imgTag = `<img src="/pic/profile/${item.iuser}/${item.mainProfile}" class="pointer profile wh30" 
+                onclick="moveToProfile(${item.iuser});" onerror="this.style.display='none';">`;
+            }
+
             const regDtInfo = getDataTimeInfo(item.regdt);
             const topDiv = document.createElement('div');
             topDiv.classList.add('top')
             topDiv.innerHTML = `
-            <div class="itemProfileCont">
-                <img src="/pic/profile/${item.iuser}/${item.mainProfile}" class="pointer" 
-                onclick="moveToProfile(${item.iuser});" onerror="this.style.display='none';">
-            </div>
+            <div class="itemProfileCont">${imgTag}</div>
             <div>
                 <div><span class="pointer" onclick="moveToProfile(${item.iuser});">${item.writer}</span> - ${regDtInfo}</div>
                 <div>${item.location == null ? '' : item.location}</div>
@@ -297,7 +300,7 @@ const feedObj = {
         cmtItemProfileDiv.className = 'cmtItemProfile';
         const cmtItemWriterProfileImg = document.createElement('img');
         cmtItemWriterProfileImg.src = `/pic/profile/${iuser}/${writerProfile}`;
-        cmtItemWriterProfileImg.className = 'profile w30 pointer';
+        cmtItemWriterProfileImg.className = 'profile wh30 pointer';
         cmtItemWriterProfileImg.addEventListener('click', () => {
             moveToProfile(iuser);
         });
