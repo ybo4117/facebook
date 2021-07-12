@@ -36,11 +36,14 @@ nav {
 .modal_close_parent { display: flex; justify-content: flex-end; padding: 40px 60px; }
 .modal_close { color: white; font-size: 50px; cursor: pointer; }
 
-.profile { border-radius: 50%; }
 .w30 { width: 30px; }
 .w50 { width: 50px; }
 .w200 { width: 200px; }
 .w300 { width: 300px; }
+
+.wh30 { width: 30px; height: 30px; }
+.wh50 { width: 50px; height: 50px; }
+.wh300 { width: 300px; height: 300px; }
 
 .loading {
     align-items: center; display:flex; height: 100%;
@@ -66,3 +69,6 @@ section #feedContainer { width: 620px; }
 #feedContainer .item .cmtItemCont .cmtItemCtnt {  background-color: silver; border-radius: 5px; flex-grow: 1; margin-left: 5px; padding: 5px;}
 #feedContainer .item .cmtItemCont .cmtItemCtnt .mainflex{display: flex;}
 #feedContainer .item .cmtItemCont .cmtItemCtnt .regdtflex {flex-grow: 1; text-align: end;}
+
+
+.profile { object-fit: cover; border-radius: 50%;}

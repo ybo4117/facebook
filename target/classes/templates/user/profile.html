@@ -30,27 +30,29 @@
                 <tr>
                     <td>게시물</td>
                     <td th:text="${profile.cntFeed}"></td>
-                    <td>팔로워</td>
-                    <td th:text="${profile.cntFollower}"></td>
-                    <td>팔로우</td>
-                    <td th:text="${profile.cntFollow}"></td>
+                    <td class="pointer follower">팔로워</td>
+                    <td class="pointer follower" th:text="${profile.cntFollower}"></td>
+                    <td class="pointer follow">팔로우</td>
+                    <td class="pointer follow" th:text="${profile.cntFollow}"></td>
                     <td th:unless="${auth.iuser eq profile.iuser}">
                         <th:block th:if="${profile.isMeFollowYou eq 1}">
-                            <input type="button" value="팔로우 취소">
+                            <input type="button" class="instaBtn instaBtnEnable" id="btnFollow" data-follow="1"
+                                   value="팔로우 취소">
                         </th:block>
                         <th:block th:unless="${profile.isMeFollowYou eq 1}">
                             <th:block th:if="${profile.isYouFollowMe eq 1}">
-                                <input type="button" value="맞팔로우">
+                                <input type="button" class="instaBtn" id="btnFollow" data-follow="0" value="맞팔로우">
                             </th:block>
                             <th:block th:unless="${profile.isYouFollowMe eq 1}">
-                                <input type="button" value="팔로우">
+                                <input type="button" class="instaBtn" id="btnFollow" data-follow="0" value="팔로우">
                             </th:block>
                         </th:block>
                     </td>
                 </tr>
             </table>
-            <img class="profile w300 pointer" th:if="${profile.mainProfile != null}"
-                 th:src="@{/pic/profile/{iuser}/{img}(iuser=${profile.iuser}, img=${profile.mainProfile})}">
+            <img class="pointer profile wh300" id="profileImg"
+                 th:src="@{/pic/profile/{iuser}/{img}(iuser=${profile.iuser}, img=${profile.mainProfile})}"
+                 onerror="this.onerror=null; this.style.display='none';">
             <table>
                 <tr>
                     <th>email</th>
@@ -75,6 +77,18 @@
     <div id="feedContainer"></div>
     <div class="loading hide"><img th:src="@{/img/loading.gif}"></div>
 
+    <div class="modal-follow hide">
+        <div>
+            <div class="container">
+                <div class="top">
+                    <div id="title">Far로우</div>
+                    <i id="modal-follow-close" class="modal_close fas fa-times"></i>
+                </div>
+                <div class="followCont"></div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal hide">
         <div class="modal_close_parent"><i class="modal_close fas fa-times"></i></div>
         <div style="background-color: white;">
@@ -85,8 +99,10 @@
                     <!-- Slides -->
                     <div class="swiper-slide" th:each="item : ${profileList}">
                         <div>
-                            <div class="profile-img-parent" th:if="${auth.iuser eq profile.iuser}" th:attr="data-iprofile=${item.iprofile}">
-                                <i th:if="${item.img != auth.mainProfile}" class="no-main-profile pointer fas fa-bell"></i>
+                            <div class="profile-img-parent" th:if="${auth.iuser eq profile.iuser}"
+                                 th:attr="data-iprofile=${item.iprofile}">
+                                <i th:if="${item.img != auth.mainProfile}"
+                                   class="no-main-profile pointer fas fa-bell"></i>
                             </div>
                             <img th:src="@{/pic/profile/{iuser}/{img}(iuser=${profile.iuser}, img=${item.img})}">
                         </div>
