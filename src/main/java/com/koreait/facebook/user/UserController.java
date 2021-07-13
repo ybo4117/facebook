@@ -103,4 +103,10 @@ public class UserController {
         return service.selUserFollowList(param);
     }
 
+    @ResponseBody
+    @GetMapping("/getFollowerList")
+    public List<UserDomain> getFollowerList(UserFollowEntity param){
+        return service.selUserFollowerList(param);
+    }
+
 }

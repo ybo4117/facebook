@@ -23,10 +23,30 @@
         WHERE A.iuser = ${youIuser}
     </select>
 
+
+    <select id="test" resultType="UserDomain">
+        -- 이거슨 조인을 사용한 쿼리문이다 위에있는 selUserProfile녀석은 서브쿼리고 요녀석은 조인을 쓴거임 ㅇㅋ? 3중병합임 ㅇㅋ?
+        SELECT
+            A.iuser , A.email , A.nm , A.tel , A.mainProfile, A.regdt
+             , IFNULL(B.cntFeed,0)     AS cntFeed
+             , IFNULL(C.cntFollow,0)   AS cntFollow
+             , IFNULL(D.cntFollower,0) AS cntFollower
+             , (SELECT COUNT(iuserMe) FROM  t_user_follow WHERE iuserMe  = 1 AND   iuserYou = 1) AS FollowForMe
+             , (SELECT COUNT(iuserMe) FROM  t_user_follow WHERE iuserMe  = 1 AND   iuserYou = 1) AS FollowForYou FROM t_user A
+                 LEFT JOIN ( SELECT iuser, COUNT(ifeed) AS cntFeed FROM  t_feed WHERE iuser = 1) B
+                 ON A.iuser = B.iuser
+                 LEFT JOIN ( SELECT iuserMe , COUNT(iuserMe) AS cntFollow FROM  t_user_follow WHERE iuserMe = 1 ) C
+                 ON A.iuser = C.iuserMe
+                 LEFT JOIN ( SELECT iuserYou , COUNT(iuserYou) AS cntFollower FROM  t_user_follow WHERE iuserYou = 1 ) D
+                 ON A.iuser = D.iuserYou WHERE A.iuser = 1;
+    </select>
+
     <select id="selUserProfileList" resultType="UserProfileEntity">
         SELECT iprofile, img
         FROM t_user_profile
         WHERE iuser = #{iuser}
     </select>
+
+
 
 </mapper>
