@@ -12,7 +12,7 @@ public class AuthenticationFacadeImpl implements IAuthenticationFacade{
     @Override
     public UserEntity getLoginUser(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsImpl userDetails = (UserDetailsImpl)auth.getPrincipal();
+        CustomUserPrincipal userDetails = (CustomUserPrincipal)auth.getPrincipal();
 
         return userDetails.getUser();
     }
