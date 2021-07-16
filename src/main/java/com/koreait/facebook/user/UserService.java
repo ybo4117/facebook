@@ -9,6 +9,7 @@ import com.koreait.facebook.feed.FeedMapper;
 import com.koreait.facebook.feed.model.FeedDTO;
 import com.koreait.facebook.feed.model.FeedDomain2;
 import com.koreait.facebook.security.IAuthenticationFacade;
+import com.koreait.facebook.security.UserDetailServiceImpl;
 import com.koreait.facebook.user.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,6 +32,7 @@ public class UserService {
     @Autowired private FeedMapper feedMapper;
     @Autowired private UserProfileMapper profileMapper;
     @Autowired private MyConst myConst;
+    @Autowired private UserDetailServiceImpl userDetailService;
 
     public int join(UserEntity param){
         String authCd = securityUtils.getRandomStringValue(5);
@@ -39,7 +41,7 @@ public class UserService {
         String hashedPw = passwordEncoder.encode(param.getPw());
         param.setPw(hashedPw);
         param.setAuthCd(authCd);
-        int result = mapper.join(param);
+        int result = userDetailService.join(param);
 
         if(result == 1){ // 메일 쏘기!! (id, authcd값을 메일로 쏜다.)
             String subject = "[facebook_test]인증메일입니다.";

@@ -1,5 +1,6 @@
 package com.koreait.facebook.security;
 
+import com.koreait.facebook.security.model.CustomUserPrincipal;
 import com.koreait.facebook.user.UserMapper;
 import com.koreait.facebook.user.model.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
